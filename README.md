@@ -23,19 +23,29 @@ Getting Started
 For Ubuntu 13.04, 14.04:
 
     sudo apt-get install gnucash python-gnucash
+    sudo apt-get install libdbd-mysql # if you require MySQL support
     ./import.py -v -f examples/accounts.gnucash examples/expenses.qif
 
-For Ubuntu 13.04, 14.04 (MySQL):
+For CentOS 7:
 
-    sudo apt-get install gnucash python-gnucash
-    sudo apt-get install libdbd-mysql
+sudo yum install gnucash
+    sudo yum install libdbi-dbd-mysql # if you require MySQL support
+
+Usage:
+
+Import to a file
+
+    ./import.py -v -f examples/accounts.gnucash examples/expenses.qif
+
+Prepare a MySQL database and import
+    
     mysql -u $USERNAME -p$PASSWORD -h $HOSTNAME
     mysql> create database accounts;
     mysql> use accounts;
     mysql> source examples/accounts.sql
     ./import.py -v -f mysql://$USERNAME:$PASSWORD@$HOSTNAME/accounts examples/expenses.qif
 
-The above command should log two "Adding transaction for account.." lines and will add the expenses from examples/expenses.qif to the accounts.gnucash file.
+The above commands should log two "Adding transaction for account.." lines and will add the expenses from examples/expenses.qif to the accounts.gnucash file.
 Open accounts.gnucash (or the equivalent database in case of MySQL) with GnuCash before and after executing the above command line to see the difference.
 
 The Python script will assume "EUR" as default currency (QIF files do not specify any currency). Use the `--currency` command line flag to change this.
