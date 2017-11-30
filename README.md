@@ -28,7 +28,7 @@ For Ubuntu 13.04, 14.04:
 
 For CentOS 7:
 
-sudo yum install gnucash
+    sudo yum install gnucash
     sudo yum install libdbi-dbd-mysql # if you require MySQL support
 
 Usage:
