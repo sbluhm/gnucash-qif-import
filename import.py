@@ -55,11 +55,18 @@ def add_transaction(book, item, currency):
     s1 = Split(book)
     s1.SetParent(tx)
     s1.SetAccount(acc)
-    amount = int(Decimal(item.split_amount.replace(',', '.')) * currency.get_fraction())
+    
+    # Check if a split exists, if not, use source account details
+    if item.split_amount == None:
+         amount = int(Decimal(item.amount.replace(',', '.')) * currency.get_fraction())
+         acc2 = lookup_account(root, item.category)
+    else:
+         amount = int(Decimal(item.split_amount.replace(',', '.')) * currency.get_fraction())
+         acc2 = lookup_account(root, item.split_category)
+    
     s1.SetValue(GncNumeric(amount, currency.get_fraction()))
     s1.SetAmount(GncNumeric(amount, currency.get_fraction()))
 
-    acc2 = lookup_account(root, item.split_category)
     s2 = Split(book)
     s2.SetParent(tx)
     s2.SetAccount(acc2)
