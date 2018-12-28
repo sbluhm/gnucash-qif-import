@@ -80,8 +80,6 @@ def parse_qif(infile):
             month, day, year = map(int, data.split('/'))
             if month > 1000:
                 year, month, day = map(int, data.split('/'))
-            elif month > 12:
-                day, month, year = map(int, data.split('/'))
             curItem.date = datetime.datetime(year=year, month=month, day=day)
         elif firstchar == 'T':
             curItem.amount = data
