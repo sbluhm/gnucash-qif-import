@@ -48,8 +48,12 @@ def add_transaction(book, item, currency):
     tx = Transaction(book)
     tx.BeginEdit()
     tx.SetCurrency(currency)
-    tx.SetDateEnteredTS(datetime.datetime.now())
-    tx.SetDatePostedTS(item.date)
+    try:        # Try to run the GnuCash 2 functions.
+         tx.SetDateEnteredTS(datetime.datetime.now())
+         tx.SetDatePostedTS(item.date)
+    except AttributeError:      # As the GnuCash 2 functions did not work, we assume GnuCash 3.
+         tx.SetDateEnteredSecs(datetime.datetime.now())
+         tx.SetDatePostedSecs(item.date)
     tx.SetDescription(item.memo)
 
     s1 = Split(book)
