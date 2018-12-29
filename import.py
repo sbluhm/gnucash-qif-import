@@ -52,8 +52,7 @@ def add_transaction(book, item, currency):
          tx.SetDateEnteredTS(datetime.datetime.now())
          tx.SetDatePostedTS(item.date)
     except AttributeError:      # As the GnuCash 2 functions did not work, we assume GnuCash 3.
-         tx.SetDateEnteredSecs(datetime.datetime.now())
-         tx.SetDatePostedSecs(item.date)
+         tx.SetDate(item.date.day, item.date.month, item.date.year) # SetDatePostedSecs contains a bug by wrongly adapting to timezones so reverting to this function. 
     tx.SetDescription(item.memo)
 
     s1 = Split(book)
